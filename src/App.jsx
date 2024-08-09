@@ -8,6 +8,7 @@ function App() {
   const [contentArray, setContentArray] = useState();
   const [testURL, setTestURL] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
   function handleChange(e) {
     setTestURL(e.target.value);
   }
@@ -17,10 +18,10 @@ function App() {
       setIsLoading(true);
       const encoded = encodeURIComponent(testURL);
       const response = await axios.get(
-        "http://localhost:3000/test?url=" + encoded
+        "http://localhost:3001/test?url=" + encoded
       );
       console.log(response);
-      const results = await response.data.data;
+      const results = await response.data;
       setIsLoading(false);
       setTitle(results.title);
       setDate_source_author(results.date_source_author);
@@ -45,15 +46,21 @@ function App() {
         <button aria-busy={isLoading ? "true" : ""} onClick={apiCall}>
           Search
         </button>
-        <p>{title}</p>
-        <p>{date_source_author}</p>
-        <p>{link}</p>
+        <p>
+        {title}
+        <br />
+          {date_source_author}
+          <br />
+          {link}
+     <br />
 
         {contentArray?.map((content) => (
           <>
-            <p>{content}</p>
+            {content}
+            <br />
+            <br />
           </>
-        ))}
+        ))} </p>
       </main>
     </>
   );
