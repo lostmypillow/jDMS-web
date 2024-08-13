@@ -13,6 +13,9 @@ function App() {
     setTestURL(e.target.value);
   }
 
+
+
+
   async function apiCall() {
     try {
       setIsLoading(true);
@@ -51,7 +54,7 @@ function App() {
         <br />
           {date_source_author}
           <br />
-          {link}
+         <a href={link}>{link}</a> 
      <br />
 
         {contentArray?.map((content) => (
