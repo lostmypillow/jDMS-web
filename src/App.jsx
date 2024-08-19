@@ -1,7 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
+// const sourceLink = "http://localhost:3001/test?url=";
+
 function App() {
   // const [count, setCount] = useState(0);
+  const [sourceLink, setSourceLink] = useState(
+    "https://jdms.onrender.com/test?url="
+  );
   const [title, setTitle] = useState();
   const [date_source_author, setDate_source_author] = useState();
   const [link, setLink] = useState();
@@ -13,16 +18,12 @@ function App() {
     setTestURL(e.target.value);
   }
 
-
-
-
-  async function apiCall() {
+  async function apiCall(event) {
+    event.preventDefault();
     try {
       setIsLoading(true);
       const encoded = encodeURIComponent(testURL);
-      const response = await axios.get(
-        "http://localhost:3001/test?url=" + encoded
-      );
+      const response = await axios.get(sourceLink + encoded);
       console.log(response);
       const results = await response.data;
       setIsLoading(false);
@@ -34,36 +35,71 @@ function App() {
       console.error(error);
     }
   }
+  const [selectedSource, setSelectedSource] = useState("localhost");
   return (
     <>
       <main className="container-fluid">
         <h1>JDMS</h1>
-        <input
-          type="text"
-          name=""
-          id=""
-          value={testURL}
-          onChange={handleChange}
-        />
+        {sourceLink === "https://jdms.onrender.com/test?url=" ? (
+          <span>
+            Warning: Render's free tier is slowwwwww as fxxk, please be patient
+          </span>
+        ) : (
+          <></>
+        )}
+       
+        <form>
+          <fieldset role="group">
+            {" "} <select
+          id="select_source"
+          name="select"
+          aria-label="Select"
+          required
+          value={selectedSource} // ...force the select's value to match the state variable...
+          onChange={(e) => {
+            setSelectedSource(e.target.value);
+            setSourceLink(e.target.value);
+            console.log(sourceLink);
+          }}
+        >
+          <option selected disabled value="">
+            Select Source
+          </option>
+          <option value="https://jdms.onrender.com/test?url=">Render</option>
+          <option value="http://localhost:3001/test?url=">localhost</option>
+        </select>
+            <input
+              type="search"
+              name=""
+              id=""
+              value={testURL}
+              onChange={handleChange}
+            />
+            <button
+              type="submit"
+              aria-busy={isLoading ? "true" : ""}
+              onClick={apiCall}
+            >
+              Search
+            </button>
+          </fieldset>
+        </form>
 
-        <button aria-busy={isLoading ? "true" : ""} onClick={apiCall}>
-          Search
-        </button>
         <p>
-        {title}
-        <br />
+          {title}
+          <br />
           {date_source_author}
           <br />
-         <a href={link}>{link}</a> 
-     <br />
-
-        {contentArray?.map((content) => (
-          <>
-            {content}
-            <br />
-            <br />
-          </>
-        ))} </p>
+          <a href={link}>{link}</a>
+          <br />
+          {contentArray?.map((content) => (
+            <>
+              {content}
+              <br />
+              <br />
+            </>
+          ))}{" "}
+        </p>
       </main>
     </>
   );
