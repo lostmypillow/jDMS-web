@@ -47,7 +47,8 @@ function App() {
         ) : (
           <></>
         )}
-       
+        <br />
+       <span>Supported sites: ctee, ePrice (manual), cool3c, mashdigi, sogi (manual), buzzorange, moneyudn, udn, digitimes (no content), kocpc, 3c ltn, ec ltn, xfastest, technews, techbang (buggy)</span>
         <form>
           <fieldset role="group">
             {" "} <select
