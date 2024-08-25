@@ -86,6 +86,10 @@ function App() {
           </fieldset>
         </form>
 
+<textarea name="links" id=""></textarea>
+
+
+
         <p>
           {title}
           <br />
@@ -101,6 +105,8 @@ function App() {
             </>
           ))}{" "}
         </p>
+
+
       </main>
     </>
   );
